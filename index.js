@@ -19,7 +19,8 @@ app.get('/', (req, res) => {
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 client.connect(err => {
 
-  
+  // db.collection.find().sort({_id:-1}).limit(1)
+
   const paperCollection = client.db("newspaper").collection("paper");
   app.post('/addPaper', (req, res) => {
     const newPaper = req.body;
@@ -31,7 +32,7 @@ client.connect(err => {
       })
   })
   app.get('/paper', (req, res) => {
-    paperCollection.find({}).toArray((err, result) => {
+    paperCollection.find({}).sort({_id:-1}).toArray((err, result) => {
       res.send(result)
     })
   })
